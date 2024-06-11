@@ -86,6 +86,30 @@
                   Invalid Email
                 </p>
               </div>
+              <div class="mb-3 ms-5">
+                <label for="exampleInputPassword1" class="form-label"
+                  >Full Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control w-100"
+                  id="exampleInputusername"
+                />
+                <div
+                  id="userHelp"
+                  class="form-text"
+                  id="invaliduser"
+                  style="font-size: smaller"
+                >
+                  The Full Name must cosist First & Last name
+                </div>
+                <p
+                  id="invalidun"
+                  style="color: red; font-size: smaller; display: none"
+                >
+                  Invalid Name
+                </p>
+              </div>
               <!--email-->
 
               <div class="mb-3 ms-5">
@@ -124,6 +148,25 @@
                   style="color: red; font-size: smaller; display: none"
                 >
                   Invalid Password
+                </p>
+              </div>
+              <div class="mb-3 ms-5">
+                <label for="exampleInputPassword1" class="form-label"
+                  >Confirm Password</label
+                >
+                <input
+                  type="password"
+                  class="form-control w-100"
+                  id="exampleInputPassword2"
+                />
+                <div id="pass2Help" class="form-text">
+                  The password should match
+                </div>
+                <p
+                  id="invalidpw1"
+                  style="color: red; font-size: smaller; display: none"
+                >
+                  The password not match
                 </p>
               </div>
               <div class="mb-3 form-check ms-5">
@@ -194,10 +237,25 @@
         "Password",
         document.getElementById("exampleInputPassword1").value
       );
+      // const myobj = {
+      //   Email: document.getElementById("exampleInputEmail1").value,
+      //   password: document.getElementById("exampleInputPassword1").value,
+      // };
+      // localStorage.setItem("mydata", myobj);
 
       function validateemail() {
         event.preventDefault();
+        var invalidun = document.getElementById("invalidun");
+
+        var invalidpw1 = document.getElementById("invalidpw1");
+
+        var pass2help = document.getElementById("pass2Help");
         var email = document.getElementById("exampleInputEmail1");
+
+        var confirm = document.getElementById("exampleInputPassword2");
+        var user = document.getElementById("exampleInputusername");
+        var userhelp = document.getElementById("userHelp");
+        var checkuser = /^[a-z ,.'-]+$/i;
         var checkphone =
           /^(?:\+?962|0)?(?:7(?:(?:[7-9])|(?:[5][0-9])|(?:[6][6-9]))\d{7})$/;
         var invalidphone = document.getElementById("invalidp");
@@ -225,6 +283,14 @@
           invalidemail.style.display = "none";
           emailhelp.style.display = "none";
         }
+        if (!user.value.match(checkuser)) {
+          userhelp.style.display = "none";
+          invalidun.style.display = "inline";
+        } else {
+          invalidun.style.display = "none";
+          userhelp.style.display = "none";
+        }
+
         if (!phone.value.match(checkphone)) {
           phonehelp.style.display = "none";
           invalidphone.style.display = "inline";
@@ -238,6 +304,13 @@
         } else {
           invalidpw.style.display = "none";
           passhelp.style.display = "none";
+        }
+        if (confirm.value !== password.value) {
+          pass2help.style.display = "none";
+          invalidpw1.style.display = "inline";
+        } else {
+          invalidun.style.display = "none";
+          pass2help.style.display = "none";
         }
         if (!checkbox1.checked) {
           cb1.style.display = "inline";
@@ -254,7 +327,12 @@
             if (password.value.match(checkpass)) {
               if (checkbox1.checked) {
                 if (checkbox2.checked) {
-                  window.location.href = "boostedwelcome.html";
+                  if (confirm.value === password.value) {
+                    localStorage.setItem("Email", email.value);
+                    localStorage.setItem("Password", password.value);
+                    localStorage.setItem("Fullname", user.value);
+                    window.location.href = "boostedwelcome.html";
+                  }
                 }
               }
             }
