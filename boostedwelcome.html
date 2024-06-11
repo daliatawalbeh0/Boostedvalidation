@@ -3,9 +3,11 @@
     <title>Welcome</title>
   </head>
   <body>
+    <div id="Hello"></div>
     <script>
-      var Welcome = JSON.parse(localStorage.getItem("Email"));
-      console.log(Welcome);
+      const hello = document.getElementById("Hello");
+      var name = localStorage.getItem("Fullname");
+      hello.innerHTML = `Welcome ${name}`;
     </script>
   </body>
 </html>
